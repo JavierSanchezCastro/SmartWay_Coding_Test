@@ -1,7 +1,7 @@
 from app.db.models.User import User
-from pydantic import UUID4, EmailStr
 from app.users import bp
 from flask import render_template
+from datetime import datetime
 
 
 @bp.route("/")
@@ -23,8 +23,8 @@ async def get_by_email(email):
 @bp.route("/uuid/<uuid:uuid>/loans")
 async def get_loans_by_uuid(uuid):
     user = User.query.filter_by(uuid=str(uuid)).first_or_404()
-    return render_template("loans/loan_history.html", user=user)
-    return templates.TemplateResponse("loan_history.html", {"request": request, "user": user})
+    current_time = datetime.now()
+    return render_template("loans/loan_history.html", user=user, now=current_time)
 #
 #@bp.route("/email/{uuid}/loans")
 #async def get_loans_by_email(request: Request, email: EmailStr, db: SessionDB):

@@ -8,7 +8,7 @@
 <p><strong>Email:</strong> {{ user.email }}</p>
 
 {% if user.loans %}
-    <h3>📖 Loaned Books</h3>
+    <h3>📖 Active Loans</h3>
     <table>
         <tr>
             <th>Title</th>
@@ -17,7 +17,7 @@
             <th>Return Date</th>
             <th>Status</th>
         </tr>
-        {% for loan in user.loans if loan.book.status.value == "Borrowed" %}
+        {% for loan in user.loans if loan.return_date > now %}
         <tr>
             <td><a href="/book/uuid/{{ loan.book.uuid }}">{{ loan.book.title }}</a></td>
             <td>{{ loan.book.author }}</td>
@@ -37,7 +37,7 @@
             <th>Return Date</th>
             <th>Status</th>
         </tr>
-        {% for loan in user.loans if loan.book.status.value != "Borrowed" %}
+        {% for loan in user.loans if loan.return_date <= now %}
         <tr>
             <td><a href="/book/uuid/{{ loan.book.uuid }}">{{ loan.book.title }}</a></td>
             <td>{{ loan.book.author }}</td>
