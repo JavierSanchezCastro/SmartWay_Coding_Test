@@ -1,0 +1,15 @@
+<!-- book_detail.html -->
+{% extends "base.html" %}
+{% block title %}{{ book.title }}{% endblock %}
+{% block header %}Book Details{% endblock %}
+{% block content %}
+<h2>{{ book.title }}</h2>
+<p><strong>UUID:</strong> {{ book.uuid }}</p>
+<p><strong>Author:</strong> {{ book.author }}</p>
+<p><strong>Publish Date:</strong> {{ book.publish_date }}</p>
+<p><strong>Pages:</strong> {{ book.pages }}</p>
+<p><strong>Status:</strong> {{ book.status.value }}</p>
+<p><strong>Goodreads Rating:</strong> {{ book.goodread_rating }}</p>
+
+<a href="/book/">Back to books list</a>
+{% endblock %}

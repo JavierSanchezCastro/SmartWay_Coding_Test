@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Library{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .navbar { background: #333; padding: 10px; }
+        .navbar a { color: white; text-decoration: none; margin: 0 10px; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">🏠 Home</a>
+        <a href="/book/">📚 Books</a>
+        <a href="/book/status/Available">✅ Available Books</a>
+        <a href="/book/status/Borrowed">📕 Borrowed Books</a>
+        <a href="/user/">🧑‍💻 Users</a>
+        <a href="/stats/statistics">📊 Statistics</a>
+    </div>
+    <div class="container">
+        <h1>{% block header %}Welcome to the Library{% endblock %}</h1>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

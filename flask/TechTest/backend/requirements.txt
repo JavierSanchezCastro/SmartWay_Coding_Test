@@ -1,0 +1,6 @@
+Flask[async]
+flask-sqlalchemy
+pydantic-settings
+pymysql
+cryptography
+numpy

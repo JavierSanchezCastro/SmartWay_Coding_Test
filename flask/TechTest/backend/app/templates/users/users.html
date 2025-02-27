@@ -1,0 +1,24 @@
+<!-- users.html -->
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+{% block header %}Library Users{% endblock %}
+{% block content %}
+<a href="/">🔙 Back to Home</a>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+            <a href="/user/uuid/{{ user.uuid }}">👤 View User</a> | 
+            <a href="/user/uuid/{{ user.uuid }}/loans">📖 Loan History</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

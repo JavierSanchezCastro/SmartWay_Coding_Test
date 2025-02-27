@@ -1,0 +1,57 @@
+<!-- loan_history.html -->
+{% extends "base.html" %}
+{% block title %}Loan History{% endblock %}
+{% block header %}Loan History for {{ user.name }}{% endblock %}
+{% block content %}
+
+<p><strong>Name:</strong> {{ user.name }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+
+{% if user.loans %}
+    <h3>📖 Loaned Books</h3>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Loan Date</th>
+            <th>Return Date</th>
+            <th>Status</th>
+        </tr>
+        {% for loan in user.loans if loan.book.status.value == "Borrowed" %}
+        <tr>
+            <td><a href="/book/uuid/{{ loan.book.uuid }}">{{ loan.book.title }}</a></td>
+            <td>{{ loan.book.author }}</td>
+            <td>{{ loan.loan_date.strftime('%d-%m-%Y') }}</td>
+            <td>{{ loan.return_date.strftime('%d-%m-%Y') }}</td>
+            <td>📕 Borrowed</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3>✅ Returned Books</h3>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Loan Date</th>
+            <th>Return Date</th>
+            <th>Status</th>
+        </tr>
+        {% for loan in user.loans if loan.book.status.value != "Borrowed" %}
+        <tr>
+            <td><a href="/book/uuid/{{ loan.book.uuid }}">{{ loan.book.title }}</a></td>
+            <td>{{ loan.book.author }}</td>
+            <td>{{ loan.loan_date.strftime('%d-%m-%Y') }}</td>
+            <td>{{ loan.return_date.strftime('%d-%m-%Y') }}</td>
+            <td>✅ Returned</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% else %}
+    <p>🚫 No loans found for this user.</p>
+{% endif %}
+
+<a href="/user/">🔙 Back to Users List</a>
+
+{% endblock %}

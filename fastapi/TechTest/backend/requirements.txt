@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+sqlalchemy
+pymysql
+pydantic
+pydantic[email]
+pydantic-settings
+pymysql
+numpy
+cryptography
+jinja2
+matplotlib

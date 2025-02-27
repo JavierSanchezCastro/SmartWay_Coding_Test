@@ -1,0 +1,16 @@
+<!-- user_detail.html -->
+{% extends "base.html" %}
+{% block title %}User Details{% endblock %}
+{% block header %}User: {{ user.name }}{% endblock %}
+{% block content %}
+<p><strong>UUID:</strong> {{ user.uuid }}</p>
+<p><strong>Name:</strong> {{ user.name }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+
+<h3>🔗 Actions</h3>
+<ul>
+    <li><a href="/user/uuid/{{ user.uuid }}/loans">📖 View Loan History</a></li>
+</ul>
+
+<a href="/user/">🔙 Back to Users List</a>
+{% endblock %}

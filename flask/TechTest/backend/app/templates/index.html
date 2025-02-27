@@ -1,0 +1,48 @@
+<!-- index.html -->
+{% extends "base.html" %}
+{% block title %}Library Home{% endblock %}
+{% block header %}Welcome to the Library{% endblock %}
+{% block content %}
+<ul>
+    <li><a href="/book/">📚 View All Books</a></li>
+    <li><a href="/book/status/Available">✅ Available Books</a></li>
+    <li><a href="/book/status/Borrowed">📕 Borrowed Books</a></li>
+</ul>
+
+<h2>👤 Users</h2>
+<ul>
+    <li><a href="/user/">🧑‍💻 View All Users</a></li>
+</ul>
+
+<h3>🔍 View Loan History</h3>
+
+<form action="" method="get" onsubmit="redirectToLoanHistory(event)">
+    <label for="user_email">Enter User Email:</label>
+    <input type="email" id="user_email" name="user_email" required>
+    <button type="submit">Search</button>
+</form>
+
+<form action="" method="get" onsubmit="redirectToLoanHistory(event)">
+    <label for="user_uuid">Enter User UUID:</label>
+    <input type="text" id="user_uuid" name="user_uuid" required>
+    <button type="submit">Search</button>
+</form>
+
+<script>
+    function redirectToLoanHistory(event) {
+        event.preventDefault();
+        
+        const email = document.getElementById("user_email").value;
+        const uuid = document.getElementById("user_uuid").value;
+
+        if (email) {
+            // Redirige usando el email
+            window.location.href = `/user/email/${encodeURIComponent(email)}`;
+        } else if (uuid) {
+            // Redirige usando el UUID
+            window.location.href = `/user/uuid/${encodeURIComponent(uuid)}`;
+        }
+    }
+</script>
+
+{% endblock %}

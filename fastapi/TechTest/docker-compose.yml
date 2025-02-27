@@ -1,0 +1,37 @@
+services:
+
+  backend:
+    build: ./backend
+    image: backend_fastapi_smartway
+    container_name: backend_fastapi_smartway
+    restart: always
+    volumes:
+      - ./backend/app:/backend/app
+    ports:
+      - "8000:80"
+    entrypoint: ["/backend/entrypoint.sh"]
+
+  db:
+    image: mysql:8.4.3
+    container_name: mysql_fastapi_smartway
+    restart: always
+    environment:
+      MYSQL_USER: ${DB_USER}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data_fastapi:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  adminer:
+    image: adminer
+    container_name: adminer_fastapi_smartway
+    restart: always
+    ports:
+      - "8080:8080"
+
+volumes:
+  db_data_fastapi:
+    driver: local

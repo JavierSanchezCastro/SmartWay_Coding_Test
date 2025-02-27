@@ -1,0 +1,31 @@
+<!-- books.html -->
+{% extends "base.html" %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block header %}{{ header_text }}{% endblock %}
+{% block content %}
+<a href="/">🔙 Back to Home</a>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Status</th>
+    </tr>
+    {% for book in books %}
+    <tr>
+        <td>
+            <a href="/book/uuid/{{ book.uuid }}">{{ book.title }}</a>
+        </td>
+        <td>{{ book.author }}</td>
+        <td>
+            {% if book.status.value == "Available" %}
+                ✅ Available
+            {% elif book.status.value == "Borrowed" %}
+            📕 Borrowed
+            {% else %}
+                ❓ Unknown
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
