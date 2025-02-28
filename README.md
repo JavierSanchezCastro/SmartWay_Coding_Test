@@ -112,7 +112,8 @@ Both versions share the same core functionality but differ in implementation det
      docker compose run --rm backend statistics
      ```
 
-    (Yes, each framework has its own mysql volume)
+(Yes, each framework has its own mysql volume)
+
 ---
 
 ## Technical Highlights
