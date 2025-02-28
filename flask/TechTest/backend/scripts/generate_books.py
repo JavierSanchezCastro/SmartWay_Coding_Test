@@ -32,6 +32,12 @@ def generate_books():
     print("✅ 100 books inserted into the database.")
 
 def generate_users_and_loans():
+    # Parameters for loan duratio
+
+    DAYS_PER_PAGE = 0.05  # Duración base por página (en días)
+    STD_DEV_PERCENTAGE = 0.2  # 20% de la duración media como desviación estándar
+
+
     # Create 5 users
     users = []
     for i in range(1, 6):
@@ -57,9 +63,17 @@ def generate_users_and_loans():
             max_attempts = 10
             valid_loan = False
 
+            # Calculate the mean and standard deviation for loan duration based on the book's pages
+            mean_loan_days = DAYS_PER_PAGE * book.pages
+            std_dev_loan_days = mean_loan_days * STD_DEV_PERCENTAGE
+
             for _ in range(max_attempts):
+                # Generate a random loan duration with normal distribution
+                loan_duration = max(1, int(np.random.normal(mean_loan_days, std_dev_loan_days)))
+
+                # Calculate loan and return dates
                 loan_date = datetime.now() - timedelta(days=random.randint(1, 30))
-                return_date = loan_date + timedelta(days=random.randint(5, 30))
+                return_date = loan_date + timedelta(days=loan_duration)
 
                 # Check if book is already loaned in this period
                 overlapping_loan = Loan.query.filter(
@@ -93,6 +107,7 @@ def generate_users_and_loans():
 
     db.session.commit()
     print("✅ 5 users created and loans generated without overlaps.")
+
 
 if __name__ == "__main__":
     print("Flask script")
