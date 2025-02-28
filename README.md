@@ -70,58 +70,49 @@ Both versions share the same core functionality but differ in implementation det
 #### 4. **Start the Docker Containers**:
    - Navigate to the directory of the backend you want to run (`fastapi` or `flask`):
      ```bash
-     cd fastapi  # or cd flask
+     cd fastapi/Techtest  # or cd flask/TechTest
      ```
    - Start the Docker containers:
      ```bash
-     docker-compose up -d
+     docker compose up -d
      ```
 
 #### 5. **Generate Sample Data**:
    - Run the `generate_books.py` script to populate the database with books, users, and loans:
      ```bash
-     docker-compose exec backend ./entrypoint.sh generate_books
+     docker compose run --rm backend generate_books
      ```
 
 #### 6. **Generate Statistics and Plots**:
    - Run the `statistics.py` script to generate statistics and plots:
      ```bash
-     docker-compose exec backend ./entrypoint.sh statistics
+     docker compose run --rm backend statistics
      ```
 
 #### 7. **Access the Application**:
    - Open your browser and navigate to:
-     - **FastAPI**: `http://localhost:8000`
-     - **Flask**: `http://localhost:8000`
+     `http://localhost:8000`
 
 #### 8. **Switching Between FastAPI and Flask**:
    - To switch to the other backend, first stop the currently running containers:
      ```bash
-     docker-compose down
+     docker compose down
      ```
    - Then navigate to the other backend's directory and start its containers:
      ```bash
-     cd ../flask  # or cd ../fastapi
-     docker-compose up -d
+     cd ../../flask/TechTest  # or cd ../../fastapi/TechTest
+     docker compose up -d
+     ```
+   - Run the `generate_books.py` script to populate the database with books, users, and loans:
+     ```bash
+     docker compose run --rm backend generate_books
+     ```
+   - Run the `statistics.py` script to generate statistics and plots:
+     ```bash
+     docker compose run --rm backend statistics
      ```
 
----
-
-## Key Differences Between FastAPI and Flask Versions
-
-### FastAPI
-- **Asynchronous**: Handles requests asynchronously, making it more efficient for I/O-bound tasks.
-- **Data Validation**: Uses Pydantic for automatic request/response data validation.
-- **Middleware**: Built-in middleware for error handling and request validation.
-- **Dependency Injection**: Supports dependency injection for database sessions and other services.
-- **Modern Features**: Includes features like OpenAPI documentation out of the box.
-
-### Flask
-- **Synchronous**: Handles requests synchronously, making it simpler but less efficient for I/O-bound tasks.
-- **Simplicity**: Easier to set up and understand for small projects.
-- **Custom Error Handling**: Requires manual setup for error handling and data validation.
-- **Flexibility**: More control over the application structure but requires more boilerplate code.
-
+    (Yes, each framework has its own mysql volume)
 ---
 
 ## Technical Highlights
