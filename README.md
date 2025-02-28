@@ -59,15 +59,12 @@ Both versions share the same core functionality but differ in implementation det
    cd <repository-folder>
    ```
 
-#### 2. **Set Up Environment Variables**:
-   - Ensure the `.env` files in both `fastapi` and `flask` directories are correctly configured with your MySQL credentials.
-
-#### 3. **Choose a Backend (FastAPI or Flask)**:
+#### 2. **Choose a Backend (FastAPI or Flask)**:
    - The project is designed to run **either FastAPI or Flask at a time**, but not both simultaneously. This is to avoid port conflicts and ensure a clean development environment.
 
    - To switch between FastAPI and Flask, you will need to stop one backend before starting the other.
 
-#### 4. **Start the Docker Containers**:
+#### 3. **Start the Docker Containers**:
    - Navigate to the directory of the backend you want to run (`fastapi` or `flask`):
      ```bash
      cd fastapi/Techtest  # or cd flask/TechTest
@@ -77,23 +74,23 @@ Both versions share the same core functionality but differ in implementation det
      docker compose up -d
      ```
 
-#### 5. **Generate Sample Data**:
+#### 4. **Generate Sample Data**:
    - Run the `generate_books.py` script to populate the database with books, users, and loans:
      ```bash
      docker compose run --rm backend generate_books
      ```
 
-#### 6. **Generate Statistics and Plots**:
+#### 5. **Generate Statistics and Plots**:
    - Run the `statistics.py` script to generate statistics and plots:
      ```bash
      docker compose run --rm backend statistics
      ```
 
-#### 7. **Access the Application**:
+#### 6. **Access the Application**:
    - Open your browser and navigate to:
      `http://localhost:8000`
 
-#### 8. **Switching Between FastAPI and Flask**:
+#### 7. **Switching Between FastAPI and Flask**:
    - To switch to the other backend, first stop the currently running containers:
      ```bash
      docker compose down
