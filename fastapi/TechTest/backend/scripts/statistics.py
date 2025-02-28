@@ -82,42 +82,20 @@ def get_statistics():
     print(f"Most borrowed book: {most_borrowed_book}")
     
     
-    #🚨 User with more loans
+    # 🚨 User with more loans
     today = datetime.now(timezone.utc)
-    most_loans_user = db.query(User.name, func.count(Loan.id).label("active_loans"))\
-                          .join(Loan, Loan.user_id == User.id)\
-                          .join(Book, Loan.book_id == Book.id)\
-                          .filter(Loan.return_date > today, Book.status == "Borrowed")\
-                          .group_by(User.name)\
-                          .order_by(desc("active_loans"))\
-                          .first()
-    print(f"User with more loans actually: {most_loans_user}")
-
-    
-
-    #Alias to compare two loans from same user
-    LoanAlias1 = aliased(Loan)
-    LoanAlias2 = aliased(Loan)
-
-    #Look for the historic loans for the user
-    most_loans_user = db.query(
-        User.name,
-        func.count().label("simultaneous_loans")
-    ).join(LoanAlias1, LoanAlias1.user_id == User.id)\
-    .join(Book, LoanAlias1.book_id == Book.id)\
-    .join(LoanAlias2, LoanAlias2.user_id == User.id)\
-    .filter(
-        LoanAlias1.book_id != LoanAlias2.book_id,
-        and_(
-            LoanAlias1.loan_date <= LoanAlias2.return_date,  #Loan A before Loan b
-            LoanAlias1.return_date >= LoanAlias2.loan_date  #Loan A finished after Loan b starts
-        )
-    ).group_by(User.name)\
-    .order_by(func.count().desc())\
-    .first()
-
-    print(f"User with more simultaneous loans in the historical: {most_loans_user}")
-    
+    most_active_user = db.query(User.name, func.count(Loan.id).label("active_loans"))\
+                                 .join(Loan, Loan.user_id == User.id)\
+                                 .filter(Loan.return_date > today)\
+                                 .group_by(User.id)\
+                                 .order_by(func.count(Loan.id).desc())\
+                                 .first()
+    if most_active_user:
+        user_name, active_loans = most_active_user
+        print(f"User with the most active loans: {user_name}")
+        print(f"Number of active loans: {active_loans}")
+    else:
+        print("No active loans found.")
     db.close()
 
 def generate_plots():
@@ -134,9 +112,10 @@ def generate_plots():
     print("Plot 'goodreads_density.png' saved in static/images.")
     
     #📉 Relation between pages and time of the loan
-    loans = db.query(Book.pages, func.julianday(Loan.return_date) - func.julianday(Loan.loan_date))\
-               .filter(Loan.return_date != None)\
-               .all()
+    loans = db.query(Book.pages, func.datediff(Loan.return_date, Loan.loan_date))\
+                  .join(Loan, Loan.book_id == Book.id)\
+                  .filter(Loan.return_date != None)\
+                  .all()
     pages, durations = zip(*loans)
     plt.figure()
     plt.scatter(pages, durations, alpha=0.5)
@@ -150,4 +129,4 @@ def generate_plots():
 
 if __name__ == "__main__":
     get_statistics()
-    #generate_plots()
+    generate_plots()

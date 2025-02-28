@@ -15,6 +15,7 @@ from sqlalchemy.sql import text
 from asyncio import sleep
 import time
 from fastapi import Request
+from fastapi.staticfiles import StaticFiles
 
 def create_tables():
     print ("Creating tables...", flush=True)
@@ -69,7 +70,7 @@ def start_application():
 
 app = start_application()
 
-
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):

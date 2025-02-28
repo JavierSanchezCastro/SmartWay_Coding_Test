@@ -1,0 +1,15 @@
+<!-- statistics.html -->
+{% extends "base.html" %}
+{% block title %}Library Statistics{% endblock %}
+{% block header %}Library Statistics{% endblock %}
+{% block content %}
+<h2>📊 Library Statistics</h2>
+
+<h3>Goodreads Ratings Distribution</h3>
+<img src="{{ url_for('static', path='images/goodreads_density.png') }}" alt="Goodreads Ratings Distribution">
+
+<h3>Pages vs. Loan Duration</h3>
+<img src="{{ url_for('static', path='images/pages_vs_duration.png') }}" alt="Pages vs. Loan Duration">
+
+<a href="/">🔙 Back to Home</a>
+{% endblock %}
