@@ -4,3 +4,7 @@ from app.main import bp
 @bp.route('/')
 def index():
     return render_template('index.html')
+
+@bp.route('/stats/statistics')
+def statistics():
+    return render_template('statistics.html')
